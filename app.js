@@ -6,7 +6,7 @@ const { PORT = 3000 } = process.env;
 const userRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
 
-app.use(helmet());
+// app.use(helmet());
 
 app.use("/users", userRouter);
 app.use("/cards", cardsRouter);

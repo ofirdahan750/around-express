@@ -1,26 +1,33 @@
-const fsPromises = require('fs').promises;
+const fsPromises = require("fs").promises;
 const path = require("path");
 const router = require("express").Router();
-
 const userList = path.join(__dirname, "../data/users.json");
 
-const getFileData = (filePath, res, msgErr) => {
+router.get("/", (req, res) => {
   return fsPromises
-    .readFile(filePath, { encoding: "utf8" })
+    .readFile(userList, { encoding: "utf8" })
     .then((data) => JSON.parse(data))
     .catch((err) => {
-      res.status(500).send({ message: msgErr || err });
+      res.status(500).send({ message: err });
     });
-};
-router.get("/", (req, res) => {
-  getFileData(userList, res);
 });
 
 const doesUserExist = (req, res) => {
-getFileData(userList,res,'User ID not found')
+  const { id } = req.params;
+  return fsPromises.readFile(userList, { encoding: "utf8" }).then((data)=>{
+    if (!JSON.parse(data).find((user) => id === user._id)) {
+      return res.status(404).json({ message: "User ID not found" });
+    }
+    else {
+     return res.status(200).json(JSON.parse(data).filter((user) => id === user._id));
+    }
+    }).catch((err) => {
+      res.status(500).send({ message: err });
+    });
 };
 
 router.use("/:id", doesUserExist);
+
 router.get("/:id", doesUserExist);
 
 module.exports = router;
