@@ -6,7 +6,7 @@ const userList = path.join(__dirname, "../data/users.json");
 router.get("/", (req, res) => {
   return fsPromises
     .readFile(userList, { encoding: "utf8" })
-    .then((data) => JSON.parse(data))
+    .then((data) => res.send(JSON.parse(data)))
     .catch((err) => {
       res.status(500).send({ message: err });
     });
@@ -26,7 +26,7 @@ const doesUserExist = (req, res) => {
     });
 };
 
-router.use("/:id", doesUserExist);
+router.use('/:id', doesUserExist);
 
 router.get("/:id", doesUserExist);
 
