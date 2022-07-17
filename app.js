@@ -48,7 +48,7 @@ app.get('/crash-test', () => {
 
 app.use(errorLogger);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   catchError(err, res);
 });
 
