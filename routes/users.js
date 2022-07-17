@@ -1,16 +1,36 @@
-const router = require('express').Router();
+const router = require("express").Router();
+// prettier-ignore
 const {
   getUsers,
   getUser,
   createUser,
   updateUser,
-  updateAvatar,
+  updateUserAvatar,
+  login,
+  getCurrentUser,
 } = require('../controllers/users');
+// prettier-ignore
+const {
+  getUserSchema,
+  createUserSchema,
+  loginSchema,
+  updateUserSchema,
+  updateAvatarSchema,
+} = require('./validation/schemas');
+const auth = require("../middlewares/auth");
 
-router.get('/', getUsers);
-router.post('/', createUser);
-router.get('/:userId', getUser);
-router.patch('/me', updateUser);
-router.patch('/me/avatar', updateAvatar);
+router.get("/users", auth, getUsers);
+
+router.get("/users/me", auth, getCurrentUser);
+
+router.get("/users/:id", auth, getUserSchema, getUser);
+
+router.post("/signup", createUserSchema, createUser);
+
+router.post("/signin", loginSchema, login);
+
+router.patch("/users/me", auth, updateUserSchema, updateUser);
+
+router.patch("/users/me/avatar", auth, updateAvatarSchema, updateUserAvatar);
 
 module.exports = router;
