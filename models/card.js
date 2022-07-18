@@ -13,7 +13,9 @@ const cardSchema = new mongoose.Schema({
     required: [true, 'Link is required'],
     validate: {
       validator(v) {
-        /^https?:\/\/[w{3}.]?[A-Z0-9\-._~:?%#[\]/@!$&'()*+,;=]+[/#]?/gim.test(v);
+        /^https?:\/\/[w{3}.]?[A-Z0-9\-._~:?%#[\]/@!$&'()*+,;=]+[/#]?/gim.test(
+          v,
+        );
       },
       message: (props) => `${props.value} is not a valid URL`,
     },
@@ -28,12 +30,15 @@ const cardSchema = new mongoose.Schema({
   },
 });
 
-cardSchema.statics.authAndDelete = function authAndDelete({ cardId, reqUserId, ownerId }) {
+cardSchema.statics.authAndDelete = function authAndDelete({
+  cardId,
+  reqUserId,
+  ownerId,
+}) {
   if (reqUserId === ownerId) {
-    return this.deleteOne({ _id: cardId })
-      .orFail(() => {
-        throw new ErrorHandler(404, `No card found with ${cardId}`);
-      });
+    return this.deleteOne({ _id: cardId }).orFail(() => {
+      throw new ErrorHandler(404, `No card found with ${cardId}`);
+    });
   }
   return Promise.reject(new ErrorHandler(403, 'Access denied'));
 };

@@ -8,8 +8,7 @@
     "dev": "nodemon app.js",
     "lint": "npx eslint .",
     "lintfix": "npm run lint -- --fix",
-    "gitpush": "git add . ; git commit -m 'fix port' ; git push",
-    "deploy": "scp -r ../backend/* ofirdahan1003@ofir1003.students.nomoredomainssbs.ru/signin:/home/ofirdahan1003/around-express"
+    "gitpush": "git add . ; git commit -m 'fix' ; git push"
   },
   "repository": {
     "type": "git",
@@ -40,10 +39,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.4",
     "validator": "^13.7.0",
-    "winston": "^3.7.2",
-    "eslint": "^8.15.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0"
+    "winston": "^3.7.2"
   },
   "prettier": {
     "singleQuote": true,
