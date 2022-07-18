@@ -6,7 +6,7 @@ const isUrlVaild = (value, helpers) => {
   return validator.isURL(value) ? value : helpers.error('string.uri');
 };
 
-const validatedCreateOrLoginUserSchema = {
+const getUserAuthSchema = {
   body: Joi.object().keys({
     email: Joi.string().max(42).required().email({ minDomainSegments: 2 }),
 
@@ -20,20 +20,20 @@ const validatedCreateOrLoginUserSchema = {
   }),
 };
 
-const validatedGetSpecifiedUserSchema = {
+const getCurrUserSchema = {
   [Segments.PARAMS]: Joi.object().keys({
     userId: Joi.objectId().required(),
   }),
 };
 
-const validatedUpdateUserSchema = {
+const updateUserSchema = {
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
     about: Joi.string().min(2).max(30).required(),
   }),
 };
 
-const validatedUpdateAvatarUserSchema = {
+const updateAvatarSchema = {
   body: Joi.object().keys({
     avatar: Joi.string().custom(isUrlVaild),
   }),
@@ -64,10 +64,10 @@ const validateLikeOrDislikeCard = {
 };
 
 module.exports = {
-  validatedCreateOrLoginUserSchema,
-  validatedGetSpecifiedUserSchema,
-  validatedUpdateUserSchema,
-  validatedUpdateAvatarUserSchema,
+  getUserAuthSchema,
+  getCurrUserSchema,
+  updateUserSchema,
+  updateAvatarSchema,
   validatedCreateCardSchema,
   validatedDeleteCardSchema,
   validateLikeOrDislikeCard,

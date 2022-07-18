@@ -4,25 +4,21 @@ const { celebrate } = require('celebrate');
 
 const {
   getUsers,
-  getUser,
+  getCurrUser,
   updateUser,
   updateAvatar,
 } = require('../controllers/users');
 const {
-  validatedUpdateUserSchema,
-  validatedUpdateAvatarUserSchema,
-  validatedGetSpecifiedUserSchema,
+  updateUserSchema,
+  updateAvatarSchema,
+  getCurrUserSchema,
 } = require('../utils/validations');
 
 // route definitions
 router.get('/', getUsers);
-router.get('/me', getUser);
-router.get('/:userId', celebrate(validatedGetSpecifiedUserSchema), getUser);
-router.patch('/me', celebrate(validatedUpdateUserSchema), updateUser);
-router.patch(
-  '/me/avatar',
-  celebrate(validatedUpdateAvatarUserSchema),
-  updateAvatar,
-);
+router.get('/me', getCurrUser);
+router.get('/:userId', celebrate(getCurrUserSchema), getCurrUser);
+router.patch('/me', celebrate(updateUserSchema), updateUser);
+router.patch('/me/avatar', celebrate(updateAvatarSchema), updateAvatar);
 
 module.exports = router;

@@ -5,8 +5,8 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const { celebrate } = require('celebrate');
 
-const routerUsers = require('./routes/users');
-const routerCards = require('./routes/cards');
+const usersRouters = require('./routes/users');
+const cardsRouters = require('./routes/cards');
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -15,7 +15,7 @@ const { catchError, ErrorHandler } = require('./utils/error');
 const auth = require('./middlewares/auth');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { validatedCreateOrLoginUserSchema } = require('./utils/validations');
+const { getUserAuthSchema } = require('./utils/validations');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -33,10 +33,10 @@ app.use(limiter);
 app.use(cors());
 app.options('*', cors());
 
-app.use('/users', auth, routerUsers);
-app.use('/cards', auth, routerCards);
-app.post('/signin', celebrate(validatedCreateOrLoginUserSchema), login);
-app.post('/signup', celebrate(validatedCreateOrLoginUserSchema), createUser);
+app.use('/users', auth, usersRouters);
+app.use('/cards', auth, cardsRouters);
+app.post('/signin', celebrate(getUserAuthSchema), login);
+app.post('/signup', celebrate(getUserAuthSchema), createUser);
 app.get('*', () => {
   throw new ErrorHandler(404, 'Requested resource not found');
 });
