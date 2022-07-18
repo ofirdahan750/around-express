@@ -39,7 +39,7 @@ const updateAvatarSchema = {
   }),
 };
 
-const validatedCreateCardSchema = {
+const getCreateCardSchema = {
   body: Joi.object().keys({
     name: Joi.string().max(30).min(2).required(),
 
@@ -51,13 +51,13 @@ const validatedCreateCardSchema = {
   }),
 };
 
-const validatedDeleteCardSchema = {
+const getDeleteCardSchema = {
   body: Joi.object().keys({
     owner: Joi.objectId().required(),
   }),
 };
 
-const validateLikeOrDislikeCard = {
+const getToggleLikeCard = {
   [Segments.PARAMS]: Joi.object().keys({
     cardId: Joi.objectId().required(),
   }),
@@ -68,7 +68,7 @@ module.exports = {
   getCurrUserSchema,
   updateUserSchema,
   updateAvatarSchema,
-  validatedCreateCardSchema,
-  validatedDeleteCardSchema,
-  validateLikeOrDislikeCard,
+  getCreateCardSchema,
+  getDeleteCardSchema,
+  getToggleLikeCard,
 };

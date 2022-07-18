@@ -25,7 +25,6 @@ module.exports.getCurrUser = (req, res, next) => {
     });
 };
 
-// the createUser request handler
 module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,

@@ -10,18 +10,18 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 const {
-  validatedCreateCardSchema,
-  validatedDeleteCardSchema,
-  validateLikeOrDislikeCard,
+  getCreateCardSchema,
+  getDeleteCardSchema,
+  getToggleLikeCard,
 } = require('../utils/validations');
 
 router.get('/', getCards);
-router.post('/', celebrate(validatedCreateCardSchema), createCard);
-router.delete('/:cardId', celebrate(validatedDeleteCardSchema), deleteCard);
-router.put('/:cardId/likes', celebrate(validateLikeOrDislikeCard), likeCard);
+router.post('/', celebrate(getCreateCardSchema), createCard);
+router.delete('/:cardId', celebrate(getDeleteCardSchema), deleteCard);
+router.put('/:cardId/likes', celebrate(getToggleLikeCard), likeCard);
 router.delete(
   '/:cardId/likes',
-  celebrate(validateLikeOrDislikeCard),
+  celebrate(getToggleLikeCard),
   dislikeCard,
 );
 
