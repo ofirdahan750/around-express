@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   about: {
     type: String,
-    default: 'guitarist',
+    default: 'Explorer',
   },
   avatar: {
     type: String,
