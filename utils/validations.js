@@ -7,13 +7,9 @@ const isUrlVaild = (value, helpers) => (validator.isURL(value) ? value : helpers
 
 const getUserAuthSchema = {
   body: Joi.object().keys({
-    email: Joi.string().max(42).required().email({ minDomainSegments: 2 }),
-
-    password: Joi.string().required().min(8).max(32)
-      .required(),
-
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
-
     about: Joi.string().min(2).max(30),
 
     avatar: Joi.string().custom(isUrlVaild),

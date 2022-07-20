@@ -3,12 +3,15 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+const { celebrate } = require('celebrate');
 
 const usersRouters = require('./routes/users');
 const cardsRouters = require('./routes/cards');
+const { createUser, login } = require('./controllers/users');
+const { getUserAuthSchema } = require('./utils/validations');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const { catchError, ErrorHandler } = require('./utils/error');
 const auth = require('./middlewares/auth');
 
@@ -32,6 +35,8 @@ app.options('*', cors());
 
 app.use('/users', auth, usersRouters);
 app.use('/cards', auth, cardsRouters);
+app.post('/signin', celebrate(getUserAuthSchema), login);
+app.post('/signup', celebrate(getUserAuthSchema), createUser);
 app.get('*', () => {
   throw new ErrorHandler(404, 'Requested resource not found');
 });
