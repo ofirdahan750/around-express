@@ -1,5 +1,5 @@
-const { Segments } = require('celebrate');
 const validator = require('validator');
+const { Segments } = require('celebrate');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
